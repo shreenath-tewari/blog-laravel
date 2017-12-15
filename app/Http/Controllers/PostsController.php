@@ -28,7 +28,7 @@ class PostsController extends Controller
            'user_id' => $user->id
         ])->get();
 
-        return view('posts.index', compact('posts'));
+        return view('posts.index', compact('post'));
     }
 
     /**
@@ -67,7 +67,16 @@ class PostsController extends Controller
         $post = Post::findorfail([
            'id' => $id
         ])->first();
-        return view('posts.show', compact('post'));
+        $user_id = $post->user_id;
+        $user = Auth::user();
+        $post_editable = 0;
+        if($user_id == $user->id) {
+            $post_editable = 1;
+        }
+        else {
+            $post_editable = 0;
+        }
+        return view('posts.show')->compact('post')->compact('post_editable');
     }
 
     /**
@@ -114,4 +123,5 @@ class PostsController extends Controller
         $post->delete();
         return redirect()->route('post.index')->with('success', 'Post has been Deleted Successfully');
     }
+
 }

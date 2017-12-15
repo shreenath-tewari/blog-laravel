@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">View All Posts</div>
                         <div class="panel-body">
-                            @if ($message)
+                            @if ($message = \Illuminate\Support\Facades\Session::get('success'))
                                 <div class="alert alert-success">
                                     <p>{{ $message }}</p>
                                 </div>
