@@ -2,19 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
-class PostsController extends Controller
+class PostsCommentsController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -23,12 +14,6 @@ class PostsController extends Controller
     public function index()
     {
         //
-        $user = Auth::user();
-        $posts = Post::where([
-           'user_id' => $user->id
-        ])->get();
-
-        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -39,7 +24,6 @@ class PostsController extends Controller
     public function create()
     {
         //
-        return view('posts.create');
     }
 
     /**
@@ -51,8 +35,6 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         //
-        Post::create($request->all());
-        return redirect()->route('post.index');
     }
 
     /**
@@ -64,10 +46,6 @@ class PostsController extends Controller
     public function show($id)
     {
         //
-        $post = Post::findorfail([
-           'id' => $id
-        ])->first();
-        return view('posts.show', compact('post'));
     }
 
     /**
@@ -79,10 +57,6 @@ class PostsController extends Controller
     public function edit($id)
     {
         //
-        $post = Post::findorfail([
-           'id' => $id
-        ])->first();
-        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -95,8 +69,6 @@ class PostsController extends Controller
     public function update(Request $request, $id)
     {
         //
-        Post::find($id)->update($request->all());
-        return redirect()->route('post.index')->with('success', 'Post has been Updated Successfully!');
     }
 
     /**
@@ -108,10 +80,5 @@ class PostsController extends Controller
     public function destroy($id)
     {
         //
-        $post = Post::findorfail([
-            'id' => $id
-        ])->first();
-        $post->delete();
-        return redirect()->route('post.index')->with('success', 'Post has been Deleted Successfully');
     }
 }
